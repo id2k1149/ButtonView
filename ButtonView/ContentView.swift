@@ -8,14 +8,52 @@
 import SwiftUI
 
 struct ContentView: View {
+    @State private var counter = 0
+    
     var body: some View {
         VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundColor(.accentColor)
-            Text("Hello, world!")
+            Text("counter = \(counter)")
+                .font(.largeTitle)
+                .padding(.top, 100)
+        
+            HStack {
+                ButtonView(title: "Increment",
+                           counter: $counter)
+                ButtonView(title: "Reset",
+                           counter: $counter)
+            }
+            .padding(.top, 100)
+            
+            
         }
         .padding()
+    }
+}
+
+struct ButtonView: View {
+    var title: String
+    
+    @Binding var counter: Int
+    
+    func increment() {
+        self.counter += 1
+    }
+    
+    func reset() {
+        self.counter = 0
+    }
+    
+    var body: some View {
+        Button(action: {
+            switch title {
+            case "Increment":
+                self.increment()
+            default:
+                self.reset()
+            }
+        }, label: {
+            Text(title)
+        })
     }
 }
 
@@ -24,3 +62,4 @@ struct ContentView_Previews: PreviewProvider {
         ContentView()
     }
 }
+
